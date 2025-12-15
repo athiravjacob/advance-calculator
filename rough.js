@@ -23,4 +23,18 @@ function factorial(n){
    return fact
 }
 
-console.log("factorial of 36525 is ",factorial(3n))
+// console.log("factorial of 36525 is ",factorial(3n))
+
+// find power 2**2
+function power(base,exponent){
+    if(exponent === 0) return 1
+    let acc = 1
+    let n = Math.abs(exponent)
+    for(let i = 1;i<= n;i++){
+         acc = acc * base
+    }
+    if(exponent < 0) return 1/acc
+    else return acc
+}
+
+console.log(power(3,-12))

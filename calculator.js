@@ -52,6 +52,16 @@ class advanceCalculator {
     // Always return as string to handle huge numbers
     return fact.toString();
   }
+
+  power(base,exponent){
+    if(exponent === 1) return 1
+    let acc = 1 ,n = Math.abs(exponent)
+    for(let i =1;i<=n;i++){
+        acc *= base
+    }
+    if(exponent < 0) return 1/acc
+    return acc
+  }
   
 }
 
@@ -59,7 +69,7 @@ let calc = new advanceCalculator();
 askQuestion()
 function askQuestion(){
 rl.question(
-  "Enter a number to do calculation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Square Root \n 6.Factorial \n",
+  "Enter a number to do calculation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Square Root \n 6.Factorial \n 7.Power \n",
   (choice) => {
     console.log(choice);
     
@@ -130,6 +140,22 @@ rl.question(
             
             console.log(`Factorial of ${n} = `, calc.factorial(n))
             askQuestion()
+        })
+
+    }
+    else if(choice === "7"){
+        rl.question("Enter the base",(base)=>{
+            rl.question("Enter the exponent",(exponent)=>{
+                if(isNaN(base) || isNaN(exponent)) {
+                    console.log("Input should be number")
+                    exit
+                }
+                console.log(`${base} raise to ${exponent} = `, calc.power(Number(base),Number(exponent)))
+                 askQuestion()
+            })
+            
+            
+            
         })
 
     }
