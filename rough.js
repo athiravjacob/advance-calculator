@@ -13,6 +13,7 @@ function square_root(s){
     console.log(newguess)
 }
 
+
 //Factorial of 36525
 
 function factorial(n){
@@ -23,8 +24,14 @@ function factorial(n){
    return fact
 }
 
-// console.log("factorial of 36525 is ",factorial(3n))
+const start = process.hrtime.bigint();   // start time
 
+const result = factorial(36525n);
+
+const end = process.hrtime.bigint();     // end time
+
+console.log(result.toString().length);
+console.log("Time taken (ms):", Number(end - start) / 1e6);
 // find power 2**2
 function power(base,exponent){
     if(exponent === 0) return 1
@@ -37,4 +44,4 @@ function power(base,exponent){
     else return acc
 }
 
-console.log(power(3,-12))
+// console.log(power(3,-12))

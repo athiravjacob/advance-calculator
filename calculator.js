@@ -54,7 +54,7 @@ class advanceCalculator {
   }
 
   power(base,exponent){
-    if(exponent === 1) return 1
+    if(exponent === 1) return base
     let acc = 1 ,n = Math.abs(exponent)
     for(let i =1;i<=n;i++){
         acc *= base
@@ -62,6 +62,28 @@ class advanceCalculator {
     if(exponent < 0) return 1/acc
     return acc
   }
+  simple_intrest(p,r,t){
+    return (p*r*t)/100
+  }
+  compound_intrest(p,r,t,n){
+    let rate = r/100
+    let base = (1+rate/n)
+    let total = (this.power(base,n*t)) * p
+    return Math.round(total - p)
+  }
+  nth_root(A,n){
+    let guess = 1 ,newGuess
+    let tolerance = 0.00001
+    let difference = 1
+    while(difference > tolerance){
+        let step1 = (n-1)*guess 
+        let step2 = A/ (this.power(guess,n-1))
+         newGuess = (step1 +step2) /n 
+        difference = Math.abs(newGuess -guess)
+        guess = newGuess
+    }
+    return newGuess
+}
   
 }
 
@@ -69,7 +91,7 @@ let calc = new advanceCalculator();
 askQuestion()
 function askQuestion(){
 rl.question(
-  "Enter a number to do calculation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Square Root \n 6.Factorial \n 7.Power \n",
+  "Enter a number to do calculation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Square Root \n 6.Factorial \n 7.Power \n 8. Simple Intrest \n 9.Compound Intrest \n 10. nth root of x \n",
   (choice) => {
     console.log(choice);
     
@@ -152,14 +174,59 @@ rl.question(
                 }
                 console.log(`${base} raise to ${exponent} = `, calc.power(Number(base),Number(exponent)))
                  askQuestion()
-            })
-            
-            
-            
+            }) 
         })
 
     }
-    else if(choice === "7") {
+    else if(choice === "8"){
+      rl.question("Enter the principle ",(principle)=>{
+        rl.question("Enter the rate",(rate)=>{
+          rl.question("enter the time ",(time)=>{
+          
+           
+            if(isNaN(principle) || isNaN(rate) || isNaN(time)) {
+              console.log("Input should be number")
+              exit
+          }
+          console.log(`Simple Intrest for ${principle} for ${time} years at ${rate} % = `, calc.simple_intrest(principle,rate,time))
+           askQuestion()
+          })
+        })
+       
+      })
+    }
+    else if(choice === "9"){
+      rl.question("Enter the principle ",(principle)=>{
+        rl.question("Enter the rate",(rate)=>{
+          rl.question("enter the time ",(time)=>{
+            rl.question("enter number of times interest is compounded per year",(n)=>{
+
+            if(isNaN(principle) || isNaN(rate) || isNaN(time)) {
+              console.log("Input should be number")
+              exit
+          }
+          console.log(`Compund Intrest for ${principle} for ${time} years at ${rate} % = `, calc.compound_intrest(principle,rate,time,n))
+           askQuestion()
+          })
+        })
+        })
+      })
+    }
+    else if(choice === "10"){
+      rl.question("Enter the Number",(A)=>{
+          rl.question("Enter the degree of root",(n)=>{
+              if(isNaN(A) || isNaN(n)) {
+                  console.log("Input should be number")
+                  exit
+              }
+              console.log(`${n} th root of ${A} = `, calc.nth_root(Number(A),Number(n)))
+               askQuestion()
+          }) 
+      })
+
+  }
+
+    else if(choice === "11") {
         console.log("Thankd for using calculator.See you")
         rl.close()
     }
